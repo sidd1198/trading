@@ -1,0 +1,24 @@
+=== BUY-AND-HOLD: NSEI ===
+assumptions: all-in cost 10 bp per side (buy and sell), risk-free rate 0.0% for Sharpe
+windows are fixed calendar blocks chosen in advance; each starts from its own first close
+note: a price index excludes dividends, so an investable ETF would earn somewhat more
+
+period      from        to               total      CAGR       vol     maxDD  Sharpe
+Full period 2007-09-17  2026-11-13    457.69%    9.39%   20.49%  -59.86%    0.55
+2008-2012   2008-01-01  2012-12-31     -4.09%   -0.83%   28.90%  -59.86%    0.11
+2013-2017   2013-01-02  2017-12-29     75.36%   11.92%   14.65%  -22.52%    0.87
+2018-2022   2018-01-02  2022-12-30     73.04%   11.61%   19.47%  -38.44%    0.68
+2023-now    2023-01-02  2026-11-13     37.75%    8.64%   12.78%  -15.77%    0.73
+
+hand check of full-period CAGR at zero cost:
+  first close 4,494.6499 on 2007-09-17, last close 25,116.5508 on 2026-11-13, 19.1567 years
+  by hand (last/first)^(1/years)-1 = 9.3976%   engine = 9.3976%   MATCH
+
+cost sensitivity, full period (cost per side, buy and sell):
+    cost      CAGR    100 grows to
+    0 bp    9.40%          558.81
+    5 bp    9.39%          558.25
+   10 bp    9.39%          557.69
+   20 bp    9.37%          556.58
+   30 bp    9.36%          555.46
+buy-and-hold trades only twice, so costs barely matter here. They will matter a lot for active strategies.

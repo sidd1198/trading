@@ -14,8 +14,9 @@ Learning project. Everything stays in backtesting and paper trading. No real mon
 - Downloaded data is cached in `data/raw/` and is NOT committed to git.
 
 ## Stages
-- [x] Stage 0: setup and data checks (`scripts/00_check_data.py`)
-- [ ] Stage 1: buy-and-hold baseline and metrics
+- [x] Stage 0: setup and data checks (`scripts/00_check_data.py`). `^NSEI` passes. `NIFTYBEES.NS` FAILS
+      (bad prices around 2010 and Dec 2019); investigate with `scripts/00b_crosscheck.py`.
+- [ ] Stage 1: buy-and-hold baseline and metrics (`scripts/01_buy_and_hold.py`, runs only on data that passes)
 - [ ] Stage 2: moving-average crossover with costs
 - [ ] Stage 3: robustness (out-of-sample, walk-forward, parameter sensitivity)
 - [ ] Stage 4: paper trading

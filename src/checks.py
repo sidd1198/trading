@@ -55,6 +55,25 @@ class PriceReport:
         return not self.hard_failures
 
 
+def ohlc_bad_mask(df: pd.DataFrame) -> pd.Series:
+    """True where High < Low, or Open/Close fall outside [Low, High] (tiny tolerance)."""
+    tol = 1e-6 * df["Close"].abs()
+    return ((df["High"] < df["Low"] - tol)
+            | (df["Close"] > df["High"] + tol) | (df["Close"] < df["Low"] - tol)
+            | (df["Open"] > df["High"] + tol) | (df["Open"] < df["Low"] - tol))
+
+
+def bad_rows(df: pd.DataFrame) -> pd.DataFrame:
+    """Rows with a NaN or non-positive price, or inconsistent Open/High/Low/Close."""
+    mask = np.zeros(len(df), dtype=bool)
+    cols = [c for c in PRICE_COLS if c in df.columns]
+    if cols:
+        mask |= (df[cols].isna().any(axis=1) | (df[cols] <= 0).any(axis=1)).to_numpy()
+    if all(c in df.columns for c in PRICE_COLS):
+        mask |= ohlc_bad_mask(df).to_numpy()
+    return df[mask]
+
+
 def check_prices(df: pd.DataFrame, name: str = "", max_gap_days: int = 5,
                  top_moves: int = 10) -> PriceReport:
     rep = PriceReport(name=name, rows=len(df))
@@ -74,11 +93,7 @@ def check_prices(df: pd.DataFrame, name: str = "", max_gap_days: int = 5,
         rep.non_positive = int((df[cols] <= 0).sum().sum())
 
     if all(c in df.columns for c in PRICE_COLS):
-        tol = 1e-6 * df["Close"].abs()
-        bad = ((df["High"] < df["Low"] - tol)
-               | (df["Close"] > df["High"] + tol) | (df["Close"] < df["Low"] - tol)
-               | (df["Open"] > df["High"] + tol) | (df["Open"] < df["Low"] - tol))
-        rep.ohlc_inconsistent = int(bad.sum())
+        rep.ohlc_inconsistent = int(ohlc_bad_mask(df).sum())
 
     if "Volume" in df.columns:
         rep.zero_volume_days = int((df["Volume"] == 0).sum())

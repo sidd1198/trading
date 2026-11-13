@@ -1,0 +1,21 @@
+# data, models, checkpoints, virtual environments (never in git)
+/data/
+/models/
+/checkpoints/
+*.pt
+*.pth
+*.ckpt
+.venv/
+venv/
+env/
+
+# python
+__pycache__/
+*.pyc
+.pytest_cache/
+.ipynb_checkpoints/
+
+# editor / OS
+.vscode/
+Thumbs.db
+.DS_Store

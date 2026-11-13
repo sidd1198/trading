@@ -1,0 +1,26 @@
+=== NSEI ===
+rows: 4700   first: 2007-09-17   last: 2026-11-13
+hard checks:
+  Close column present ....... OK
+  duplicate dates ............ 0      OK
+  dates sorted ............... yes    OK
+  NaN price cells ............ 0      OK
+  non-positive prices ........ 0      OK
+informational (you judge these):
+  OHLC inconsistent rows ..... 0
+  zero-volume days ........... 1334 (index data often has no volume)
+  gaps over 5 calendar days .. 1
+      2014-10-01 -> 2014-10-07  (6 days)
+  rows per year: 2007:72 2008:245 2009:241 2010:250 2011:242 2012:242 2013:247 2014:240 2015:244 2016:244 2017:248 2018:245 2019:241 2020:250 2021:248 2022:248 2023:245 2024:246 2025:249 2026:213
+  10 largest daily moves (close to close):
+      2009-05-18   +17.74%
+      2020-03-23   -12.98%
+      2008-10-24   -12.20%
+      2020-04-07    +8.76%
+      2008-01-21    -8.70%
+      2020-03-12    -8.30%
+      2020-03-16    -7.61%
+      2008-10-31    +6.99%
+      2008-01-25    +6.95%
+      2008-10-29    +6.85%
+RESULT: PASS
